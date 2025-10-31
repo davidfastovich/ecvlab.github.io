@@ -19,9 +19,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Install cargo-binstall
-        run: |
-          curl -L https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-gnu.tar.gz \
-            | tar -xz -C ~/.cargo/bin
+        run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
       - name: Install Dioxus CLI (precompiled)
         run: cargo binstall dioxus-cli -y
