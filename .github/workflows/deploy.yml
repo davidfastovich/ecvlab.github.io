@@ -31,12 +31,19 @@ jobs:
       - name: Build Dioxus site
         run: dx bundle
 
-      # Commit and push to gh-pages
+      # Commit changes
+      # - name: Commit files
+      #   run: |
+      #     cd gh-pages
+      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #     git config --local user.name "github-actions[bot]"
+      #     git commit -a -m "actions build"
+
+      # Push to gh-pages
       - name: Deploy to gh-pages
         uses: ad-m/github-push-action@master
         with:
           branch: gh-pages
-          directory: gh-pages
-          commit-message: "Deploy Dioxus site"
+          directory: ~/gh-pages
           force: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
