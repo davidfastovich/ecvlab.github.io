@@ -2,7 +2,7 @@
 set -e  # exit on any error
 
 TARGET_BRANCH="gh-pages"
-BUILD_DIR="/home/runner/work/ecvlab.github.io/ecvlab.github.io/target/dx/ecvlab-github-io/debug/web/public"
+BUILD_DIR="/home/runner/work/ecvlab.github.io/ecvlab.github.io/target/dx/ecvlab-github-io/release/web/public"
 CNAME="ecvlab.github.io"
 
 # Build the Dioxus web bundle
@@ -29,6 +29,8 @@ cp gh-pages/index.html gh-pages/404.html
 
 # Commit and push changes
 cd gh-pages
+git config user.name "github-actions[bot]"
+git config user.email "github-actions[bot]@users.noreply.github.com"
 git add --all
 git commit -m "Deploy website"
 git push --force origin $TARGET_BRANCH
