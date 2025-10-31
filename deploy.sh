@@ -29,8 +29,8 @@ cp gh-pages/index.html gh-pages/404.html
 
 # Commit and push changes
 cd gh-pages
-git config user.name "github-actions[bot]"
-git config user.email "github-actions[bot]@users.noreply.github.com"
+git config --local user.email "github-actions[bot]@users.noreply.github.com"
+git config --local user.name "github-actions[bot]"
 git add --all
 git commit -m "Deploy website"
 git push --force origin $TARGET_BRANCH
