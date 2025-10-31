@@ -3,10 +3,10 @@ name: Build and Deploy Dioxus Web
 on:
   push:
     branches:
-      - main  # change this if your default branch is something else
+      - main
 
 permissions:
-  contents: write  # allows pushing to gh-pages
+  contents: write
 
 jobs:
   build:
@@ -18,10 +18,15 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install Dioxus CLI
-        run: cargo install dioxus-cli
+      - name: Install cargo-binstall
+        run: |
+          curl -L https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-gnu.tar.gz \
+            | tar -xz -C ~/.cargo/bin
 
-      - name: Build and deploy to GitHub Pages
+      - name: Install Dioxus CLI (precompiled)
+        run: cargo binstall dioxus-cli -y
+
+      - name: Build and deploy
         run: bash ./deploy.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
