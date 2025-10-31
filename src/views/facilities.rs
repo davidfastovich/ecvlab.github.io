@@ -1,5 +1,5 @@
 // use crate::components::Hero;
-use dioxus::{html::p, prelude::*};
+use dioxus::{prelude::*};
 
 #[component]
 pub fn Facilities() -> Element {

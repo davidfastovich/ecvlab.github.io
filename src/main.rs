@@ -2,7 +2,6 @@
 // need dioxus
 use dioxus::prelude::*;
 
-use components::Hero;
 use views::{Home, People, Facilities, Publications, Header, Footer};
 
 /// Define a components module that contains all shared components for our app.
@@ -43,7 +42,6 @@ enum Route {
 // The macro returns an `Asset` type that will display as the path to the asset in the browser or a local path in desktop bundles.
 const FAVICON: Asset = asset!("/assets/favicon.svg");
 // The asset macro also minifies some assets like CSS and JS to make bundled smaller
-const MAIN_CSS: Asset = asset!("/assets/styling/main.css");
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 
 fn main() {

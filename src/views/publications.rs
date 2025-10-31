@@ -2,7 +2,6 @@ use csv::ReaderBuilder;
 use wasm_bindgen_futures::spawn_local;
 use dioxus::prelude::*;
 use reqwest::Client;
-use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 struct PubRow {
