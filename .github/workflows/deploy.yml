@@ -1,0 +1,27 @@
+name: Build and Deploy Dioxus Web
+
+on:
+  push:
+    branches:
+      - main  # change this if your default branch is something else
+
+permissions:
+  contents: write  # allows pushing to gh-pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Dioxus CLI
+        run: cargo install dioxus-cli
+
+      - name: Build and deploy to GitHub Pages
+        run: bash ./deploy.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
