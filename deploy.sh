@@ -15,10 +15,10 @@ if [ ! -d "$BUILD_DIR" ]; then
 fi
 
 # Set up a clean gh-pages branch in a temporary directory
-# git clone --depth 1 --branch $TARGET_BRANCH https://github.com/$GITHUB_REPOSITORY.git gh-pages
+git clone --depth 1 --branch $TARGET_BRANCH https://github.com/$GITHUB_REPOSITORY.git gh-pages
 
 # Clear existing content
-mkdir -p gh-pages
+rm -rf gh-pages/*
 
 # Copy new site files
 cp -r $BUILD_DIR/* gh-pages/
@@ -28,9 +28,11 @@ echo "$CNAME" > gh-pages/CNAME
 cp gh-pages/index.html gh-pages/404.html
 
 # Commit and push changes
-# cd ~/gh-pages
+cd gh-pages
+git config --global user.name "${{ github.actor }}"
+git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 # git config --local user.email "github-actions[bot]@users.noreply.github.com"
 # git config --local user.name "github-actions[bot]"
-# git add --all
-# git commit -m "Deploy website"
-# git push --force origin $TARGET_BRANCH
+git add --all
+git commit -m "Deploy website"
+git push --force origin $TARGET_BRANCH

@@ -43,10 +43,10 @@ jobs:
       #     git commit -a -m "actions build"
 
       # Push to gh-pages
-      - name: Deploy to gh-pages
-        uses: ad-m/github-push-action@master
-        with:
-          branch: gh-pages
-          directory: gh-pages
-          force: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Deploy to gh-pages
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     branch: gh-pages
+      #     directory: gh-pages
+      #     force-orphan: true
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
