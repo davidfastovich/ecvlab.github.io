@@ -15,19 +15,17 @@ if [ ! -d "$BUILD_DIR" ]; then
 fi
 
 # Set up a clean gh-pages branch in a temporary directory
-git clone --depth 1 --branch $TARGET_BRANCH https://github.com/$GITHUB_REPOSITORY.git gh-pages
+git clone --depth 1 --branch $TARGET_BRANCH https://github.com/$GITHUB_REPOSITORY.git ~/gh-pages
 
 # Clear existing content
-rm -rf gh-pages/*
+rm -rf ~/gh-pages/*
 
 # Copy new site files
-cp -r $BUILD_DIR/* gh-pages/
-echo "$CNAME" > gh-pages/CNAME
+cp -r $BUILD_DIR/* ~/gh-pages/
+echo "$CNAME" > ~/gh-pages/CNAME
 
 # Add a fallback 404 page for GitHub Pages
-cp gh-pages/index.html gh-pages/404.html
-
-echo ls -d $PWD/*
+cp ~/gh-pages/index.html ~/gh-pages/404.html
 
 # Commit and push changes
 # cd gh-pages
