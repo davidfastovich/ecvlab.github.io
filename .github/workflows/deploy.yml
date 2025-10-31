@@ -5,26 +5,50 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      # 1Checkout the repository
+      - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed to push commits
 
-      - name: Install Rust
+      # Install Rust toolchain
+      - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 
+      # Install cargo-binstall for precompiled CLI
       - name: Install cargo-binstall
-        run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+        run: |
+          curl -L https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-gnu.tar.gz \
+          | tar -xz -C ~/.cargo/bin
 
-      - name: Install Dioxus CLI (precompiled)
+      # Install the pinned Dioxus CLI version
+      - name: Install Dioxus CLI
         run: cargo binstall dioxus-cli@0.6.3 -y
 
-      - name: Build and deploy
-        run: bash ./deploy.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Build the Dioxus web site
+      - name: Build Dioxus site
+        run: dx bundle
+
+      # Copy build output to gh-pages folder
+      - name: Prepare gh-pages folder
+        run: |
+          BUILD_DIR="/home/runner/work/ecvlab.github.io/ecvlab.github.io/target/dx/ecvlab-github-io/release/web/public"
+          rm -rf gh-pages
+          mkdir gh-pages
+          cp -r "$BUILD_DIR"/* gh-pages/
+          echo "ecvlab.github.io" > gh-pages/CNAME
+          cp gh-pages/index.html gh-pages/404.html
+
+      # Commit and push to gh-pages
+      - name: Deploy to gh-pages
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          folder: gh-pages
+          commit-message: "Deploy Dioxus site"
+          force: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
