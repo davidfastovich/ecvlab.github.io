@@ -1,48 +1,38 @@
 #!/bin/bash
+set -e  # exit on any error
 
-# Exit on error
-set -e
-
-# Define variables
-VERSION=$(grep '^version' Cargo.toml | cut -d '"' -f2)
 TARGET_BRANCH="gh-pages"
-SOURCE_DIR="./target/dx/personal_website/release/web/public"
-TMP_DIR=$(mktemp -d)
+BUILD_DIR="target/dx/personal_website/release/web/public"
+CNAME="ecvlab.github.io"
 
-dx clean
+# Build the Dioxus web bundle
 dx bundle --platform web
 
-if [ ! -d "$SOURCE_DIR" ]; then
-    echo "Error: SOURCE_DIR '$SOURCE_DIR' does not exist."
+# Ensure build directory exists
+if [ ! -d "$BUILD_DIR" ]; then
+    echo "Error: build directory '$BUILD_DIR' not found."
     exit 1
 fi
 
-echo "Checking out $TARGET_BRANCH branch..."
-git worktree prune
-git fetch origin
-git worktree add -B $TARGET_BRANCH $TMP_DIR origin/$TARGET_BRANCH
+# Set up a clean gh-pages branch in a temporary directory
+git clone --depth 1 --branch $TARGET_BRANCH https://github.com/$GITHUB_REPOSITORY.git gh-pages || \
+    git clone --depth 1 https://github.com/$GITHUB_REPOSITORY.git gh-pages && \
+    (cd gh-pages && git checkout --orphan $TARGET_BRANCH)
 
-echo "Copying files from $SOURCE_DIR to $TARGET_BRANCH..."
-rm -rf $TMP_DIR/*
+# Clear existing content
+rm -rf gh-pages/*
 
-cp -r $SOURCE_DIR/* $TMP_DIR/
-echo "ecvlab.github.io" > "$TMP_DIR/CNAME"
+# Copy new site files
+cp -r $BUILD_DIR/* gh-pages/
+echo "$CNAME" > gh-pages/CNAME
 
-cd $TMP_DIR
+# Add a fallback 404 page for GitHub Pages
+cp gh-pages/index.html gh-pages/404.html
 
-echo Copying index.html to 404.html...
-cp index.html 404.html
-
-if ! git diff --quiet; then
-    echo "Committing and pushing to $TARGET_BRANCH..."
-    git add --all
-    git commit -m "web release for version $VERSION"
-    git push origin $TARGET_BRANCH
-    echo gh-pages have been updated to $VERSION!
-else
-    echo "No changes to publish."
-fi
-
-# Clean up
-cd -
-git worktree remove $TMP_DIR
+# Commit and push changes
+cd gh-pages
+git config user.name "github-actions[bot]"
+git config user.email "github-actions[bot]@users.noreply.github.com"
+git add --all
+git commit -m "Deploy website"
+git push --force origin $TARGET_BRANCH
