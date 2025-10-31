@@ -36,7 +36,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           branch: gh-pages
-          folder: gh-pages
+          directory: gh-pages
           commit-message: "Deploy Dioxus site"
           force: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
