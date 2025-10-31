@@ -6,8 +6,7 @@ BUILD_DIR="target/dx/personal_website/release/web/public"
 CNAME="ecvlab.github.io"
 
 # Build the Dioxus web bundle
-dx bundle --platform web
-
+dx bundle
 # Ensure build directory exists
 if [ ! -d "$BUILD_DIR" ]; then
     echo "Error: build directory '$BUILD_DIR' not found."
