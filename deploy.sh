@@ -14,13 +14,8 @@ if [ ! -d "$BUILD_DIR" ]; then
     exit 1
 fi
 
-# Remove folder if it exists
-rm -rf gh-pages
-
 # Set up a clean gh-pages branch in a temporary directory
-git clone --depth 1 --branch $TARGET_BRANCH https://github.com/$GITHUB_REPOSITORY.git gh-pages || \
-    git clone --depth 1 https://github.com/$GITHUB_REPOSITORY.git gh-pages && \
-    (cd gh-pages && git checkout --orphan $TARGET_BRANCH)
+git clone --depth 1 --branch $TARGET_BRANCH https://github.com/$GITHUB_REPOSITORY.git gh-pages
 
 # Clear existing content
 rm -rf gh-pages/*
