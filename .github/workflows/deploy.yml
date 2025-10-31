@@ -28,8 +28,13 @@ jobs:
         run: cargo binstall dioxus-cli@0.6.3 -y
 
       # Build the Dioxus web site
-      - name: Build Dioxus site
-        run: dx bundle
+      # - name: Build Dioxus site
+      #   run: dx bundle
+
+      - name: Build and deploy to GitHub Pages
+        run: bash ./deploy.sh
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Commit changes
       # - name: Commit files
