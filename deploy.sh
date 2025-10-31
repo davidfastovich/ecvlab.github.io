@@ -27,7 +27,7 @@ echo "$CNAME" > gh-pages/CNAME
 # Add a fallback 404 page for GitHub Pages
 cp gh-pages/index.html gh-pages/404.html
 
-ls -d $PWD/*
+echo ls -d $PWD/*
 
 # Commit and push changes
 # cd gh-pages
