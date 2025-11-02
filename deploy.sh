@@ -3,7 +3,7 @@ set -e  # exit on any error
 
 TARGET_BRANCH="gh-pages"
 BUILD_DIR="/home/runner/work/ecvlab.github.io/ecvlab.github.io/target/dx/ecvlab-github-io/release/web/public"
-CNAME="ecvlab.github.io"
+CNAME="ecvlab.davidfastovich.com"
 
 # Build the Dioxus web bundle
 dx bundle
@@ -26,13 +26,3 @@ echo "$CNAME" > gh-pages/CNAME
 
 # Add a fallback 404 page for GitHub Pages
 cp gh-pages/index.html gh-pages/404.html
-
-# Commit and push changes
-# cd gh-pages
-# git config --global user.name "${{ github.actor }}"
-# git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-# git config --local user.email "github-actions[bot]@users.noreply.github.com"
-# git config --local user.name "github-actions[bot]"
-# git add --all
-# git commit -m "Deploy website"
-# git push --force origin $TARGET_BRANCH

@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # needed to push commits
+          fetch-depth: 0
 
       # Install Rust toolchain
       - name: Setup Rust
@@ -23,13 +23,10 @@ jobs:
       - name: Install cargo-binstall
         run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
-      # Install the pinned Dioxus CLI version
+      # Install the pinned Dioxus CLI version using binstall for pre-compiled binaries
       - name: Install Dioxus CLI
         run: cargo binstall dioxus-cli@0.6.3 -y
 
-      # Build the Dioxus web site
-      # - name: Build Dioxus site
-      #   run: dx bundle
 
       - name: Build and deploy to GitHub Pages
         run: bash ./deploy.sh
@@ -40,20 +37,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./gh-pages
           publish_branch: gh-pages
-
-      # Commit changes
-      # - name: Commit files
-      #   run: |
-      #     cd gh-pages
-      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      #     git config --local user.name "github-actions[bot]"
-      #     git commit -a -m "actions build"
-
-      # Push to gh-pages
-      # - name: Deploy to gh-pages
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     branch: gh-pages
-      #     directory: gh-pages
-      #     force-orphan: true
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
