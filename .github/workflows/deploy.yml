@@ -34,6 +34,13 @@ jobs:
       - name: Build and deploy to GitHub Pages
         run: bash ./deploy.sh
 
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages
+
       # Commit changes
       # - name: Commit files
       #   run: |
