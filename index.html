@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EcoClimate Variability Lab</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+  <link rel="preload" as="script" href="/./assets/ecvlab-github-io-97fd703ee6a9ebbd.js" crossorigin><link rel="preload" as="fetch" type="application/wasm" href="/./assets/ecvlab-github-io_bg-67d1389e62e88794.wasm" crossorigin></head>
+  <body>
+    <div id="main"></div>
+  <script>
+            // We can't use a module script here because we need to start the script immediately when streaming
+            import("/./assets/ecvlab-github-io-97fd703ee6a9ebbd.js").then(
+                ({ default: init }) => {
+                init("/./assets/ecvlab-github-io_bg-67d1389e62e88794.wasm").then((wasm) => {
+                    if (wasm.__wbindgen_start == undefined) {
+                    wasm.main();
+                    }
+                });
+                }
+            );
+            </script>
+            
+            </body>
+</html>
