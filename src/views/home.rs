@@ -78,7 +78,9 @@ pub fn Home() -> Element {
                         group studies these dramatic shifts in climate throughout Earth's history and how forests and
                         ecosystems have adapted to them. We are particularly interested in identifying the dynamics
                         of past climate changes which involves combing empirical evidence of past climate changes
-                        alongside physics-based models."
+                        alongside physics-based models. Based in the Department of Geography at the University of Georgia,
+                        we conduct this research using state-of-the-art analytical facilities at the Center for Applied
+                        Isotope Studies."
                     }
 
                     p { class: "text-lg leading-relaxed mb-6",
